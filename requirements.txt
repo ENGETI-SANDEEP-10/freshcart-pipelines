@@ -1,0 +1,23 @@
+
+# Core data processing
+pandas
+numpy
+
+# Machine learning
+scikit-learn
+
+# Testing
+pytest
+
+# Data warehouse
+snowflake-connector-python
+
+# Event streaming
+pika
+
+# Notebook support
+jupyter
+ipykernel
+
+# Mage orchestration
+mage-ai

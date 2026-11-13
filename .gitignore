@@ -1,0 +1,51 @@
+
+# Environment variables and credentials
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*credentials*.json
+*secrets*.json
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.venv/
+venv/
+env/
+*.egg-info/
+dist/
+build/
+
+# Model files
+*.pkl
+*.pickle
+*.joblib
+
+# Generated data
+*.csv
+*.parquet
+*.feather
+
+# Mage logs and local state
+mage.log
+*.log
+.mage_data/
+
+# Jupyter checkpoints
+.ipynb_checkpoints/
+
+# IDE and OS files
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Local configuration
+config.local.yaml
+*.local.json
