@@ -19,5 +19,5 @@ pika
 jupyter
 ipykernel
 
-# Mage orchestration
-mage-ai
+# Mage orchestration will be installed separately
+# for Part C in Google Colab.
