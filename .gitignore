@@ -49,3 +49,6 @@ Thumbs.db
 # Local configuration
 config.local.yaml
 *.local.json
+
+# Erlang crash dumps
+erl_crash.dump

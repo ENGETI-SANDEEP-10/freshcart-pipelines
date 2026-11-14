@@ -1,0 +1,5 @@
+# Part B5 — Why ELT Is Better for FreshCart
+
+ELT is more suitable for FreshCart because its web orders, mobile orders, CRM events, and exchange-rate data come from different sources with different formats and structures. By loading the original records into Snowflake's Bronze layer before transforming them, FreshCart preserves the raw data for auditing, troubleshooting, and reprocessing when validation rules change. Snowflake can then perform cleansing, deduplication, SCD Type 2 processing, enrichment, and Gold publishing using SQL, while invalid orders are tracked through Quarantine. This approach also makes it easier to introduce new business rules, such as the `unsupported_currency` rule, without having to collect the original source data again.
+
+ETL would be preferable when sensitive information must be masked or removed **before it reaches the destination system**, such as when a company's data-governance policy prohibits storing unmasked personal information in its data warehouse.
