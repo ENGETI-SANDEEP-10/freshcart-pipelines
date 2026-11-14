@@ -30,8 +30,11 @@ def main():
         durable=True,
     )
 
-    # A fresh, private queue for this driver instance.
-    result = channel.queue_declare(queue="", exclusive=True)
+    # Create a private queue for this driver instance.
+    result = channel.queue_declare(
+        queue="",
+        exclusive=True,
+    )
     queue_name = result.method.queue
 
     channel.queue_bind(
@@ -51,16 +54,16 @@ def main():
         try:
             request = json.loads(body)
 
+            if not isinstance(request, dict):
+                raise ValueError("Request must be a JSON object")
+
             required_fields = (
-                "request_id",
+                "id",
                 "city",
                 "zone",
                 "type",
-                "timestamp",
+                "ts",
             )
-
-            if not isinstance(request, dict):
-                raise ValueError("Request must be a JSON object")
 
             missing_fields = [
                 field
@@ -76,13 +79,15 @@ def main():
             print(
                 f"[{args.name}] RECEIVED "
                 f"key={method.routing_key} "
-                f"request_id={request['request_id']} "
+                f"id={request['id']} "
                 f"city={request['city']} "
                 f"zone={request['zone']} "
-                f"type={request['type']}",
+                f"type={request['type']} "
+                f"ts={request['ts']}",
                 flush=True,
             )
 
+            # Valid message: acknowledge successful processing.
             ch.basic_ack(
                 delivery_tag=method.delivery_tag
             )
@@ -94,6 +99,7 @@ def main():
                 flush=True,
             )
 
+            # Malformed message: reject without requeueing.
             ch.basic_nack(
                 delivery_tag=method.delivery_tag,
                 requeue=False,

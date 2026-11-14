@@ -24,11 +24,11 @@ def create_request():
     request_type = random.choice(REQUEST_TYPES)
 
     request = {
-        "request_id": str(uuid4()),
+        "id": str(uuid4()),
         "city": city,
         "zone": zone,
         "type": request_type,
-        "timestamp": datetime.now(timezone.utc).isoformat(),
+        "ts": datetime.now(timezone.utc).isoformat(),
     }
 
     routing_key = f"{city}.{zone}.{request_type}"
@@ -59,9 +59,9 @@ def main():
             request, routing_key = create_request()
             count += 1
 
-            # D3: Intentionally corrupt every 10th message.
-            # The routing key remains valid so that matching
-            # consumers receive the malformed JSON payload.
+            # D3: Deliberately omit zone every 10th message.
+            # Keep the routing key valid so matching drivers
+            # can receive and reject the malformed payload.
             if count % 10 == 0:
                 del request["zone"]
                 status = "MALFORMED"
